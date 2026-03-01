@@ -97,7 +97,7 @@ node -v
 ### 1. Clone dự án
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/hocuong636/REST_Assured.git
 cd REST_Assured
 ```
 
