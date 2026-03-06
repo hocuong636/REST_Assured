@@ -60,8 +60,8 @@ REST_Assured/
             ├── utils/
             │   └── TestConfig.java              # ⚙️ Lớp cấu hình chung (UTF-8, logging)
             └── api/
-                ├── JsonPlaceholderTest.java      # 🌐 Test Public API (3 test cases) — extends TestConfig
-                └── MockApiProductTest.java       # 🏠 Test Mock API (4 test cases)  — extends TestConfig
+                ├── JsonPlaceholderTest.java      # 🌐 Test Public API (5 test cases) — extends TestConfig
+                └── MockApiProductTest.java       # 🏠 Test Mock API (7 test cases)  — extends TestConfig
 ```
 
 > **Lưu ý:** Dự án chỉ chứa mã kiểm thử (`src/test/`), không có mã nguồn ứng dụng (`src/main/`) vì đây là dự án kiểm thử API thuần túy.
@@ -132,7 +132,7 @@ npx json-server --watch db.json
 Mở **Terminal 2** và chạy:
 
 ```bash
-# Chạy toàn bộ test (7 test cases)
+# Chạy toàn bộ test (12 test cases)
 mvn clean test
 
 # Chạy riêng test Public API (JSONPlaceholder)
@@ -145,7 +145,7 @@ mvn test "-Dtest=api.MockApiProductTest"
 ### Kết quả mong đợi
 
 ```
-[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0
 [INFO] BUILD SUCCESS
 ```
 
@@ -153,22 +153,27 @@ mvn test "-Dtest=api.MockApiProductTest"
 
 ## 📝 Mô Tả Test Cases
 
-### 1. JsonPlaceholderTest — Public API (3 test cases)
+### 1. JsonPlaceholderTest — Public API (5 test cases)
 
-| # | Test Case | Method | Endpoint | Kiểm tra |
+| # | Test Case | Method | Endpoint | Kiểm tra (Happy Path + Negative + Performance) |
 |---|-----------|--------|----------|----------|
 | TC01 | `testGetPostsList_ShouldReturn200` | GET | `/posts` | Status 200, Content-Type JSON, danh sách không rỗng |
 | TC02 | `testGetPostById_ShouldReturnCorrectData` | GET | `/posts/1` | Status 200, kiểm tra `userId`, `id`, `title`, `body` |
 | TC03 | `testCreateNewPost_ShouldReturn201` | POST | `/posts` | Status 201, response chứa dữ liệu gửi lên + `id` tự sinh |
+| TC04 | `testGetNonExistentPost_ShouldReturn404` | GET | `/posts/9999` | **Negative** - Lấy bài viết không tồn tại, trả về Status 404 |
+| TC05 | `testGetPostsResponseTime...` | GET | `/posts` | **Performance** - Phản hồi dưới 2 giây, in thời gian ra console |
 
-### 2. MockApiProductTest — Mock API (4 test cases)
+### 2. MockApiProductTest — Mock API (7 test cases)
 
-| # | Test Case | Method | Endpoint | Kiểm tra |
+| # | Test Case | Method | Endpoint | Kiểm tra (Happy Path + Negative + Performance) |
 |---|-----------|--------|----------|----------|
 | TC01 | `testGetAllProducts` | GET | `/products` | Status 200, response là mảng JSON không rỗng |
 | TC02 | `testCreateNewProduct` | POST | `/products` | Status 201, `id` tự sinh, dữ liệu khớp payload |
 | TC03 | `testUpdateProduct` | PUT | `/products/1` | Status 200, dữ liệu được cập nhật đúng |
 | TC04 | `testDeleteProduct` | DELETE | `/products/:id` | Status 200 khi xóa, GET lại trả về 404 |
+| TC05 | `testGetNonExistentProduct_ShouldReturn404`| GET | `/products/9999`| **Negative** - Lấy object không có thật, trả về Status 404 |
+| TC06 | `testDeleteNonExistentProduct_ShouldReturn404`| DELETE | `/products/9999`| **Negative** - Xóa object không có thật, trả về Status 404 |
+| TC07 | `testGetProductsResponseTime...` | GET | `/products` | **Performance** - Phản hồi dưới 1 giây (do chạy Local) |
 
 ---
 
@@ -191,12 +196,12 @@ Xem chi tiết tài liệu API Mock Server tại file: [API_DOCUMENTATION.md](AP
 ## 🔑 Điểm Nổi Bật Khi Demo
 
 1. **BDD Style** — Code test viết theo chuẩn `given() / when() / then()`, dễ đọc như văn bản tự nhiên.
-2. **Kế thừa TestConfig** — Cấu hình chung (UTF-8, logging) tập trung ở lớp cha `TestConfig`, các test class kế thừa để tái sử dụng, tránh lặp code.
-3. **Path Parameters** — Sử dụng `.get("/posts/{id}", 1)` thay vì nối chuỗi, giúp code sạch và chuẩn REST Assured.
-4. **Log chi tiết** — Sử dụng `.log().all()` để hiển thị đầy đủ Request Headers, Body gửi đi và Response Headers, Body nhận về ngay trên console.
-5. **CRUD đầy đủ** — Cover đủ 4 HTTP methods: GET, POST, PUT, DELETE.
-6. **2 loại API** — Test cả Public API (JSONPlaceholder) lẫn Mock API (json-server local).
-7. **Assertions đa dạng** — Kiểm tra status code, content-type, JSON body fields, null check.
+2. **Kế thừa TestConfig & Tự động log Banner** — Custom **JUnit 5 Extension** để in banner tự động cho từng test case. Cấu hình chung (UTF-8, logging) tập trung ở `TestConfig`.
+3. **Negative Testing** — Không chỉ kiểm tra Happy Path mà còn test các kịch bản ngoại lệ (gọi xoá, lấy ID không tồn tại sinh ra HTTP 404) để chứng minh phần mềm xử lý lỗi chặt chẽ.
+4. **Performance Testing** — Có test case chuyên đo lường *Response Time* (`.extract().time()`), kết hợp in ra terminal giúp trực quan hiệu năng của API.
+5. **Path Parameters** — Sử dụng `.get("/posts/{id}", 1)` thay vì nối chuỗi, giúp code sạch và chuẩn REST Assured.
+6. **Log chi tiết** — Dùng `.log().all()` hiển thị đầy đủ payload, header, giúp gỡ lỗi dễ.
+7. **Bao phủ 4 HTTP Methods** — GET, POST, PUT, DELETE hoàn chỉnh.
 
 ---
 

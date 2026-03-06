@@ -1,10 +1,10 @@
 {
   "products": [
     {
-      "id": "1",
       "name": "Laptop Dell XPS 15 (2024 Edition)",
       "price": 35000000,
-      "category": "Electronics"
+      "category": "Electronics",
+      "id": "1"
     },
     {
       "id": "2",
@@ -16,6 +16,72 @@
       "id": "3",
       "name": "Chuot Logitech MX Master 3S",
       "price": 2200000,
+      "category": "Accessories"
+    },
+    {
+      "id": "0640",
+      "name": "Keychron K8 Mechanical Keyboard",
+      "price": 2500000,
+      "category": "Accessories"
+    },
+    {
+      "id": "f470",
+      "name": "Keychron K8 Mechanical Keyboard",
+      "price": 2500000,
+      "category": "Accessories"
+    },
+    {
+      "id": "320a",
+      "name": "Keychron K8 Mechanical Keyboard",
+      "price": 2500000,
+      "category": "Accessories"
+    },
+    {
+      "id": "1b77",
+      "name": "Keychron K8 Mechanical Keyboard",
+      "price": 2500000,
+      "category": "Accessories"
+    },
+    {
+      "id": "dd37",
+      "name": "Keychron K8 Mechanical Keyboard",
+      "price": 2500000,
+      "category": "Accessories"
+    },
+    {
+      "id": "8526",
+      "name": "Keychron K8 Mechanical Keyboard",
+      "price": 2500000,
+      "category": "Accessories"
+    },
+    {
+      "id": "9e80",
+      "name": "Keychron K8 Mechanical Keyboard",
+      "price": 2500000,
+      "category": "Accessories"
+    },
+    {
+      "id": "7ecf",
+      "name": "Keychron K8 Mechanical Keyboard",
+      "price": 2500000,
+      "category": "Accessories"
+    },
+    {
+      "id": "dc4b",
+      "name": "Keychron K8 Mechanical Keyboard",
+      "price": 2500000,
+      "category": "Accessories"
+    },
+    {
+      "id": "00e0",
+      "name": "Keychron K8 Mechanical Keyboard",
+      "price": 2500000,
+      "category": "Accessories"
+    },
+    {
+      "id": "c017",
+      "name": "Keychron K8 Mechanical Keyboard",
+      "price": 2500000,
       "category": "Accessories"
     }
   ],

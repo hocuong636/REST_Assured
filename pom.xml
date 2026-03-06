@@ -62,9 +62,6 @@
                 <configuration>
                     <!-- Đảm bảo JVM chạy test dùng encoding UTF-8 (hỗ trợ tiếng Việt) -->
                     <argLine>-Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8</argLine>
-                    <environmentVariables>
-                        <JAVA_TOOL_OPTIONS>-Dfile.encoding=UTF-8</JAVA_TOOL_OPTIONS>
-                    </environmentVariables>
                 </configuration>
             </plugin>
         </plugins>
