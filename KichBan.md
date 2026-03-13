@@ -64,12 +64,26 @@
 
 ### 6.1. Demo test Public API - JSONPlaceholder
 
+*(Mở file **`pom.xml`** để giới thiệu các Dependencies)*
+> Trước khi đi vào code chạy thử, mình xin lướt qua nhanh phần cấu hình dự án. Để chạy được Rest Assured trong bài này, nhóm đã dùng Maven và thêm 3 thư viện (dependency) chính trong file `pom.xml`: 
+> 1. `rest-assured` - linh hồn của công cụ, dùng để giả lập gọi và kiểm tra API. 
+> 2. `junit-jupiter` - framework để quản lý và chạy các test case. 
+> 3. `jackson-databind` - thư viện giúp ánh xạ, chuyển đổi qua lại giữa định dạng JSON và Object trong Java.
+
 *(Mở IDE hiển thị file **`JsonPlaceholderTest.java`**)*
-> Đầu tiên, chúng ta sẽ xem cách Rest Assured tương tác với một API thật trên internet là `jsonplaceholder`. Đây là API mở cho phép test các thao tác cơ bản.
-> Trong file này, nhóm đã viết 5 Test Case bao gồm GET danh sách bài viết, GET chi tiết 1 bài, POST tạo bài viết mới, và cả kiểm tra lỗi (Negative Test) khi tìm bài viết không tồn tại.
+> Kế tiếp, mời mọi người xem qua file code `JsonPlaceholderTest.java`. Đây là nơi nhóm dùng để tương tác với một Public API thực tế trên internet là `jsonplaceholder`. 
+> - Ở hàm setup đầu tiên (`@BeforeAll`), nhóm đã cấu hình `baseURI`, giúp các phần request bên dưới gọi cực kỳ ngắn gọn.
+> - Trong class này, nhóm thiết kế 5 Test Case minh hoạ: 
+>   - **TC01 & TC02**: Nhóm demo luồng GET để lấy danh sách bài viết và chi tiết một bài viết. Cấu trúc `given().when().then()` phối hợp nhịp nhàng để check Status Code (200) và validate từng trường dữ liệu trả về với các hàm như `equalTo()` hay `notNullValue()`.
+>   - **TC03**: Demo API POST tạo mới. Chúng ta truyền dữ liệu đầu vào chuẩn JSON qua hàm `.body()`, gửi đi và kiểm tra xem server có trả về đúng mã `201 Created` không.
+>   - **TC04**: Đặc biệt, nhóm giả lập một Negative Test (Test hướng đi sai) bằng cách thử GET một ID là `9999` (không tồn tại trong hệ thống). Rest Assured kiểm tra rất chuẩn xác trường hợp này, xác nhận server chặn lại và báo lỗi `404 Not Found`.
+>   - **TC05**: Cuối cùng là một kịch bản Performance Test nhẹ nhàng, dùng hàm `extract().time()` để đo thời gian phản hồi thực tế xem có vượt ngưỡng 2 giây (2000ms) hay không.
 
 *(Nhấn nút Run toàn bộ class `JsonPlaceholderTest`)*
-> ...Như các bạn thấy ở phía console, các test case chạy rất nhanh. Ở đoạn test tạo mới bài viết (TC03), Console đã in ra chi tiết Body JSON định dạng rất rõ ràng mà Rest Assured gửi đi, cũng như bóc tách được Response trả về với HTTP status là 201 Created. Đặc biệt, nhóm cũng cài đặt một test kiểm tra hiệu năng (TC05): yêu cầu Public API này phải phản hồi dưới 2 giây (2000ms), và test đã Pass thành công. Việc test thẳng lên một server thật chứng tỏ Rest Assured xử lý thao tác HTTP thực tế rất mạnh mẽ.
+> Và bây giờ, mình sẽ ấn Run toàn bộ class này để mọi người xem độ hiệu quả thực tế!
+> ...Như các bạn thấy, quá trình chạy test tự động cực kỳ nhanh chóng. Tất cả 5 test case đều Pass xanh lè. 
+> Mọi người cùng nhìn xuống cửa sổ Console: Nhờ các hàm hỗ trợ `.log().all()` hoặc `.log().body()` của Rest Assured, toàn bộ thông tin 'đi - về' (Request và Response) đều được in ra rất minh bạch. Trong TC03 (test sinh bài viết mới), Console ghi nhận rành mạch Header, nguyên khối Body text chuẩn JSON cấu hình gửi đi, và bóc tách rõ Response trả về kèm ID mới tự động sinh. Ở phần Performance Test (TC05), thời gian phản hồi cụ thể cũng được in thẳng ra console và đạt chuẩn dưới 2000ms. 
+> Khả năng log chi tiết này sẽ giúp lập trình viên thao tác debug rất nhàn!
 
 ### 6.2. Demo test Local Mock API - json-server quản lý Sản Phẩm
 

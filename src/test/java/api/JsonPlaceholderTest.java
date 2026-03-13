@@ -40,12 +40,6 @@ public class JsonPlaceholderTest extends TestConfig {
     @Order(1)
     @DisplayName("TC01 - GET /posts - Lay danh sach posts, kiem tra status 200 va Content-Type")
     public void testGetPostsList_ShouldReturn200() {
-        // MÔ TẢ: Gửi request GET đến /posts để lấy toàn bộ danh sách bài viết.
-        // KỲ VỌNG:
-        // - Status code trả về là 200 (OK)
-        // - Header Content-Type phải chứa "application/json" (API trả về JSON)
-        // - Body response phải là một mảng không rỗng (có ít nhất 1 bài viết)
-
         given()
                 .log().method() // Log phương thức HTTP (GET)
                 .log().uri() // Log đường dẫn URL đầy đủ
@@ -66,13 +60,6 @@ public class JsonPlaceholderTest extends TestConfig {
     @Order(2)
     @DisplayName("TC02 - GET /posts/1 - Lay post id=1, kiem tra userId va id trong body")
     public void testGetPostById_ShouldReturnCorrectData() {
-        // MÔ TẢ: Gửi request GET đến /posts/1 để lấy bài viết có id = 1.
-        // KỲ VỌNG:
-        // - Status code = 200
-        // - Trường "id" trong response body phải bằng 1
-        // - Trường "userId" phải bằng 1 (theo data gốc của JSONPlaceholder)
-        // - Trường "title" và "body" phải tồn tại (không null)
-
         given()
                 .log().method()
                 .log().uri()

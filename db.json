@@ -83,6 +83,30 @@
       "name": "Keychron K8 Mechanical Keyboard",
       "price": 2500000,
       "category": "Accessories"
+    },
+    {
+      "id": "f853",
+      "name": "Keychron K8 Mechanical Keyboard",
+      "price": 2500000,
+      "category": "Accessories"
+    },
+    {
+      "id": "9f6d",
+      "name": "Keychron K8 Mechanical Keyboard",
+      "price": 2500000,
+      "category": "Accessories"
+    },
+    {
+      "id": "3a91",
+      "name": "Keychron K8 Mechanical Keyboard",
+      "price": 2500000,
+      "category": "Accessories"
+    },
+    {
+      "id": "207b",
+      "name": "Keychron K8 Mechanical Keyboard",
+      "price": 2500000,
+      "category": "Accessories"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
